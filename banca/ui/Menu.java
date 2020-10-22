@@ -7,45 +7,46 @@ import banca.domain.Cliente;
 import banca.domain.exception.SaldoInsufficenteException;
 
 public class Menu {
+	private Scanner scanIn=new  Scanner(System.in);
 	
 	public void scelta() {
 		Banca b = Banca.getInstance();
-		Scanner scanIn = new Scanner(System.in);
+		
 		Double amount;
 		int idConto, idCliente, idContoDest, idClienteDest;
-		int num;
+		int num=0;
 		boolean bool = true;
+		String s;
 		
 		while (bool) {
-			System.out.println("Digita 1 per depositare, 2 per un bonifico, 3 per ritirare,"
-								+ " 4 per la lista clienti, altro per uscire:");
-			num = Integer.parseInt(scanIn.nextLine());
+			boolean isNumber = false;
+		
+			do {
+				try {
+					 num=ottieniIntero("Digita 1 per depositare, 2 per un bonifico, 3 per ritirare,"
+							+ " 4 per la lista clienti, altro per uscire:");
+					isNumber=true;
+					}catch (NumberFormatException e) {
+						System.out.println("Digita un numero");
+			         }
+				
+			}while(!isNumber);
 			
 			switch(num) {
 			case 1:
-				System.out.println("Inserisci quanto desideri depositare, poi premi invio:");
-				amount = Double.parseDouble(scanIn.nextLine());
-				System.out.println("Inserisci ora il codice del tuo conto, poi premi invio:");
-				idConto = Integer.parseInt(scanIn.nextLine());
-				System.out.println("Inserisci ora il tuo id, poi premi invio:");
-				idCliente = Integer.parseInt(scanIn.nextLine());
-				
+				amount=ottieniDouble("Inserisci quanto desideri depositare, poi premi invio:");
+				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+				idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
 				b.Deposita(amount, idConto, idCliente);
 				System.out.println("Deposito andato a buon fine");
 				break;
 		
 			case 2:
-				System.out.println("Inserisci l'importo del bonifico, poi premi invio:");
-				amount = Double.parseDouble(scanIn.nextLine());
-				System.out.println("Inserisci ora il codice del tuo conto, poi premi invio:");
-				idConto =  Integer.parseInt(scanIn.nextLine());
-				System.out.println("Inserisci ora il tuo id, poi premi invio:");
-				idCliente =  Integer.parseInt(scanIn.nextLine());
-				System.out.println("Inserisci ora il codice del conto di destinazione, poi premi invio:");
-				idContoDest =  Integer.parseInt(scanIn.nextLine());
-				System.out.println("Inserisci ora l'id del cliente a cui è associato il suddetto conto, poi premi invio:");
-				idClienteDest =  Integer.parseInt(scanIn.nextLine());
-				
+				amount = ottieniDouble("Inserisci l'importo del bonifico, poi premi invio:");
+				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+				idCliente =  ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
+				idContoDest =  ottieniIntero("Inserisci ora il codice del conto di destinazione, poi premi invio:");
+				idClienteDest = ottieniIntero("Inserisci ora l'id del cliente a cui è associato il suddetto conto, poi premi invio:");
 				try {
 					b.Bonifica(amount, idConto, idCliente, idContoDest, idClienteDest);
 					System.out.println("Bonifico andato a buon fine");
@@ -56,6 +57,17 @@ public class Menu {
 				break;
 
 			case 3:
+				amount = ottieniDouble("Inserisci l'importo del ritiro da effettuare");
+				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+				idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
+				
+				try {
+					b.preleva(amount, idConto, idCliente);
+				} catch (SaldoInsufficenteException e) {
+					System.out.println(e.getMessage());
+				}
+				System.out.println("Deposito andato a buon fine");
+				
 				break;
 				
 			case 4:
@@ -67,9 +79,25 @@ public class Menu {
 				break;
 				
 			default:
+				System.out.println("Grazie e serena giornata");
 				bool = false;
 			}
 		}
 		scanIn.close();
+	}
+	private String ottieniStringa(String messaggio) {
+		System.out.println(messaggio);
+		return scanIn.nextLine();
+		
+		}
+	private int ottieniIntero(String messaggio) {
+		String s=ottieniStringa(messaggio);
+		return Integer.parseInt(s);
+		
+	}
+	private double ottieniDouble(String messaggio) {
+		String s=ottieniStringa(messaggio);
+		return Double.parseDouble(s);
+		
 	}
 }

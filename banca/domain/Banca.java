@@ -70,6 +70,26 @@ public class Banca {
 		sorgente.getContoById(idContoSorgente)
 			.bonifica(bonifico, destinatario.getContoById(idContoDestinatario));		
 	}
+	
+	public void preleva(double somma, int idConto, int idCliente) throws SaldoInsufficenteException {
+		for(Cliente cliente : database.getAllClients()) {
+			int id = cliente.getId();
+			if(idCliente == id) {
+				ContoCorrente x = cliente.getContoById(idConto);
+				
+				if(x.getSaldo()<somma) {
+					throw new SaldoInsufficenteException(x.getSaldo(), somma, idConto);
+				}else {
+				x.preleva(somma);
+				
+				}
+				return;
+			}
+		}
+		
+		
+		
+	}
 
 	
 	

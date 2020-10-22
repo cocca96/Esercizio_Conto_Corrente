@@ -7,8 +7,11 @@ import banca.domain.exception.SaldoInsufficenteException;
 public class BankInterface {
 
 	public static void main(String[] args) {
+		
+		Menu m=new Menu();
+		m.scelta();
 			
-		Banca b = Banca.getInstance();
+		/*Banca b = Banca.getInstance();
 		
 		Iterable<Cliente> ic = b.getClienti();
 		
@@ -30,7 +33,7 @@ public class BankInterface {
 		
 		for(Cliente c : ic) {
 			System.out.println(c);
-		}
+		}*/
 	}
 
 }

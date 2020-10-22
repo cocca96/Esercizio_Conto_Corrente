@@ -10,8 +10,9 @@ import banca.domain.ContoItaliano;
 import banca.domain.Sesso;
 
 public class InMemoryDatabase {
+		private Iterable<Cliente> clients=readAllClients();
 		
-		public Iterable<Cliente> getAllClients(){
+		private Iterable<Cliente> readAllClients(){
 			List<Cliente> clienti = new ArrayList<Cliente>();
 			
 			
@@ -31,4 +32,9 @@ public class InMemoryDatabase {
 			
 			return clienti;
 		}
+		
+		public Iterable<Cliente> getAllClients(){
+			return clients;
+		}
 }
+
