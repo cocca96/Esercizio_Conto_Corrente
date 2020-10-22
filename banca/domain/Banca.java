@@ -3,6 +3,7 @@ package banca.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import banca.data.Database;
 import banca.data.InMemoryDatabase;
 import banca.domain.exception.SaldoInsufficenteException;
 
@@ -14,7 +15,7 @@ public class Banca {
 	private String nome = "Bank of Java";
 	private String[] codiciSegreti = {"adfhfda","asdafaf","zxcxv"};
 		
-	private InMemoryDatabase database = new InMemoryDatabase();
+	private Database database = new InMemoryDatabase();
 	
 	private Banca() {
 	}

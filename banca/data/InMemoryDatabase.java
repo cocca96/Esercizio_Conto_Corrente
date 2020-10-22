@@ -9,7 +9,7 @@ import banca.domain.ContoCorrente;
 import banca.domain.ContoItaliano;
 import banca.domain.Sesso;
 
-public class InMemoryDatabase {
+public class InMemoryDatabase implements Database {
 		private Iterable<Cliente> clients=readAllClients();
 		
 		private Iterable<Cliente> readAllClients(){

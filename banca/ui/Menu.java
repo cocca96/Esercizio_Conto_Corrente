@@ -33,49 +33,16 @@ public class Menu {
 			}while(!isNumber);
 			
 			switch(num) {
-			case 1:
-				amount=ottieniDouble("Inserisci quanto desideri depositare, poi premi invio:");
-				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
-				idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
-				b.Deposita(amount, idConto, idCliente);
-				System.out.println("Deposito andato a buon fine");
+			case 1: deposita();
 				break;
 		
-			case 2:
-				amount = ottieniDouble("Inserisci l'importo del bonifico, poi premi invio:");
-				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
-				idCliente =  ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
-				idContoDest =  ottieniIntero("Inserisci ora il codice del conto di destinazione, poi premi invio:");
-				idClienteDest = ottieniIntero("Inserisci ora l'id del cliente a cui è associato il suddetto conto, poi premi invio:");
-				try {
-					b.Bonifica(amount, idConto, idCliente, idContoDest, idClienteDest);
-					System.out.println("Bonifico andato a buon fine");
-				}
-				catch (SaldoInsufficenteException e) {
-					System.out.println(e.getMessage());
-				}
+			case 2: bonifica();
 				break;
 
-			case 3:
-				amount = ottieniDouble("Inserisci l'importo del ritiro da effettuare");
-				idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
-				idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
-				
-				try {
-					b.preleva(amount, idConto, idCliente);
-				} catch (SaldoInsufficenteException e) {
-					System.out.println(e.getMessage());
-				}
-				System.out.println("Deposito andato a buon fine");
-				
+			case 3: preleva();
 				break;
 				
-			case 4:
-				Iterable<Cliente> ic = b.getClienti();
-				System.out.println("Di seguito la lista dei clienti:");
-				for(Cliente c : ic) {
-					System.out.println(c);
-				}
+			case 4: stampaClienti();
 				break;
 				
 			default:
@@ -99,5 +66,47 @@ public class Menu {
 		String s=ottieniStringa(messaggio);
 		return Double.parseDouble(s);
 		
+	}
+	private void deposita() {
+		double amount=ottieniDouble("Inserisci quanto desideri depositare, poi premi invio:");
+		int idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+		int idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
+		Banca.getInstance().Deposita(amount, idConto, idCliente);
+		System.out.println("Deposito andato a buon fine");
+		
+	}
+	private void bonifica() {
+		double amount = ottieniDouble("Inserisci l'importo del bonifico, poi premi invio:");
+		int idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+		int idCliente =  ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
+		int idContoDest =  ottieniIntero("Inserisci ora il codice del conto di destinazione, poi premi invio:");
+		int idClienteDest = ottieniIntero("Inserisci ora l'id del cliente a cui è associato il suddetto conto, poi premi invio:");
+		try {
+			Banca.getInstance().Bonifica(amount, idConto, idCliente, idContoDest, idClienteDest);
+			System.out.println("Bonifico andato a buon fine");
+		}
+		catch (SaldoInsufficenteException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	private void preleva() {
+		double amount = ottieniDouble("Inserisci l'importo del ritiro da effettuare");
+		int idConto = ottieniIntero("Inserisci ora il codice del tuo conto, poi premi invio:");
+		int idCliente = ottieniIntero("Inserisci ora il tuo id, poi premi invio:");
+		
+		try {
+			Banca.getInstance().preleva(amount, idConto, idCliente);
+		} catch (SaldoInsufficenteException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Prelievo andato a buon fine");
+	}
+	private void stampaClienti() {
+		Iterable<Cliente> ic = Banca.getInstance().getClienti();
+		System.out.println("Di seguito la lista dei clienti:");
+		for(Cliente c : ic) {
+			System.out.println(c);
+		}
 	}
 }
