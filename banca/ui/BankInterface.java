@@ -2,6 +2,7 @@ package banca.ui;
 
 import banca.domain.Banca;
 import banca.domain.Cliente;
+import banca.domain.Impiegato;
 import banca.domain.exception.SaldoInsufficenteException;
 
 public class BankInterface {
@@ -9,17 +10,24 @@ public class BankInterface {
 	public static void main(String[] args) {
 		
 		Menu m=new Menu();
-		m.scelta();
+		//m.scelta();
+		m.menuStatistiche();
 			
-		/*Banca b = Banca.getInstance();
+		/*
+		Banca b = Banca.getInstance();
 		
-		Iterable<Cliente> ic = b.getClienti();
+		Iterable<Impiegato> impiegati = b.getImpiegato();
 		
-		for(Cliente c : ic) {
+		for(Impiegato c : impiegati) {
 			System.out.println(c);
 		}
+		System.out.println(b.sommaStipendi());
+		System.out.println(b.mediaStipendi());
+		System.out.println(b.medianaStipendi());
+		b.verificaStipendi();
 		
-		b.Deposita(100, 1, 1);
+		b.listGiovaniImpiegati().forEach(System.out::println);
+		/*b.Deposita(100, 1, 1);
 		
 		for(Cliente c : ic) {
 			System.out.println(c);

@@ -109,4 +109,53 @@ public class Menu {
 			System.out.println(c);
 		}
 	}
+	
+	public void menuStatistiche() {
+		Banca b = Banca.getInstance();
+		
+		
+		int num=0;
+		boolean bool = true;
+		
+		while (bool) {
+			boolean isNumber = false;
+		
+			do {
+				try {
+					 num=ottieniIntero("Digita 1 per avere la somma degli stipendi, 2 per la media, 3 per mediana,"
+							+ " 4 per la verifica, 5 per la lista degi impiegati maschi con meno di 25 anni , poi altro per uscire:");
+					isNumber=true;
+					}catch (NumberFormatException e) {
+						System.out.println("Digita un numero");
+			         }
+				
+			}while(!isNumber);
+			
+			switch(num) {
+					
+			case 1: System.out.println(b.sommaStipendi());
+					
+				break;
+		
+			case 2: System.out.println(b.mediaStipendi());
+
+				break;
+
+			case 3: System.out.println(b.medianaStipendi());
+				break;
+				
+			case 4: b.verificaStipendi();
+				break;
+			case 5: b.listGiovaniImpiegati().forEach(System.out::println);
+;
+				break;
+			default:
+				System.out.println("Grazie e serena giornata");
+				bool = false;
+			}
+		}
+		scanIn.close();
+	}
+	
+	
 }
