@@ -24,7 +24,14 @@ public class Impiegato {
 	public String getNome() {
 		return nome;
 	}
-
+	public boolean isFemale() {
+		/*if(this.sesso == Sesso.FEMMINA) {
+			return true ;
+		}else {
+			return false;
+		}*/
+		return this.sesso == Sesso.FEMMINA;
+	}
 
 	public int getId() {
 		return id;
@@ -43,7 +50,7 @@ public class Impiegato {
 	}
 	  
 	  public String toString() {
-		  return "nome: "+ nome+" "+ " cognome: "+ cognome ;
+		  return "NOME: "+ nome+" "+ " COGNOME: "+ cognome + " SESSO: "+sesso+" DATA NASCITA: "+dataNascita+" STIPENDIO: "+stipendio;
 	  }
 }
 

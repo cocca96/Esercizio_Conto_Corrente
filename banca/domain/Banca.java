@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
@@ -79,8 +80,7 @@ public class Banca {
 			int id = c.getId();
 			if(idClienteSorgente == id) {
 				sorgente=c;
-// andrebbe nell'oggetto e modificherebbe sorgente
-				//c.setName("Paolo")
+
 			}else if(idClienteDestinatario == id){
 				destinatario=c;
 			}
@@ -111,7 +111,8 @@ public class Banca {
 
 	public double sommaStipendi() {
 		double sommaStipendi = listImpiegati.stream()
-								.mapToDouble(x -> x.getStipendio())
+								//.mapToDouble(Impiegato::getStipendio)
+								.mapToDouble(x ->x.getStipendio())
 								.sum();
 		
 		return sommaStipendi;							
@@ -122,6 +123,9 @@ public class Banca {
 		double mediaStipendi = listImpiegati.stream()
 				.mapToDouble(x -> x.getStipendio())
 				.average().getAsDouble();
+		
+		//mediaStipendi.ifPresent(System.out::println);
+		
 
 		return mediaStipendi;
 	}
@@ -130,7 +134,7 @@ public class Banca {
 		DoubleStream sortStipendi = listImpiegati.stream()
 				.mapToDouble(Impiegato::getStipendio)
 				.sorted();
-		double mediana = listImpiegati.size()%2 == 0?
+		double mediana = (listImpiegati.size() & 1) == 0?
 				sortStipendi.skip(listImpiegati.size()/2-1).limit(2).average().getAsDouble():        
 				sortStipendi.skip(listImpiegati.size()/2).findFirst().getAsDouble();
 
@@ -150,6 +154,8 @@ public class Banca {
 		if(minStipendioMaschio > maxStipendioFemmina) {
 			System.out.println("il minimo stipendio degli uomini è maggiore del"
 					+ " massimo stipendio delle donne");
+		}else {
+			System.out.println(" Non c'è più religione!");
 		}
 	}
 	
@@ -157,23 +163,41 @@ public class Banca {
 		
 		List<Impiegato> giovanotti = listImpiegati.stream()
 				.filter(x -> ((x.getSesso() == Sesso.MASCHIO) && ( 25 > AgeCalculator
-				.calculateAge(x.getDataNascita(), LocalDate.of(2020, 7, 12)))))
+				.calculateAge(x.getDataNascita(), LocalDate.now()))))
 				.collect(Collectors.toList());
 		
         
 		return giovanotti;
-	}
-	*/
-public List<Impiegato> listGiovaniImpiegati(){
+	}*/
+	
+	public List<Impiegato> listGiovaniImpiegati(){
 		
 		List<Impiegato> giovanotti = listImpiegati.stream()
 				.filter(x -> ((x.getSesso() == Sesso.MASCHIO) && ( 25 > Period
-				.between(x.getDataNascita(), LocalDate.of(2020, 7, 12))
+				.between(x.getDataNascita(), LocalDate.now())
 				.getYears())))
 				.collect(Collectors.toList());
 		
         
 		return giovanotti;
 	}
+
+	public Identity statistiche() {
+		
+		Identity result = listImpiegati.stream()
+		 .reduce(new Identity(), (id, emp) -> id.combina(emp), (id1, id2) -> id1.combina(id2) );
+		return result;
+	     
+	}
+
+
+
+
+
+
+
+
+
+ 
 
 }

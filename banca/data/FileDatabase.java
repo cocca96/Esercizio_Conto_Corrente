@@ -17,14 +17,7 @@ import banca.domain.Impiegato;
 import banca.domain.Sesso;
 
 public class FileDatabase implements Database{
-	  private String nome; 
-	  private String cognome; 
-	  private int id; 
-	  private Sesso sesso; 
-	  private int numeroConti;
-	  private LocalDate dataNascita;
-	  private double salario;
-	  private double sommaStipendi;
+	  
 	  
 	@Override
 	public Iterable<Cliente> getAllClients() {	
@@ -32,6 +25,15 @@ public class FileDatabase implements Database{
 		}
 
 	public Iterable<Impiegato> getAllImpiegato() {
+		
+		  String nome; 
+		  String cognome; 
+		  int id; 
+		  Sesso sesso; 
+		  LocalDate dataNascita;
+		  double salario;
+		
+		
 		List<Impiegato> impiegati = new ArrayList<Impiegato>();
 		
 		try(BufferedReader reader = new BufferedReader(new FileReader("impiegati.txt"))) {

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import banca.domain.Banca;
 import banca.domain.Cliente;
+import banca.domain.Identity;
 import banca.domain.exception.SaldoInsufficenteException;
 
 public class Menu {
@@ -147,8 +148,10 @@ public class Menu {
 			case 4: b.verificaStipendi();
 				break;
 			case 5: b.listGiovaniImpiegati().forEach(System.out::println);
-;
 				break;
+			case 6: Identity res =  b.statistiche();
+					System.out.println(res.getSum()) ;
+			break;
 			default:
 				System.out.println("Grazie e serena giornata");
 				bool = false;
