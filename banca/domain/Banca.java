@@ -183,9 +183,10 @@ public class Banca {
 	}
 
 	public Identity statistiche() {
-		
-		Identity result = listImpiegati.stream()
-		 .reduce(new Identity(), (id, emp) -> id.combina(emp), (id1, id2) -> id1.combina(id2) );
+//		Identity result = listImpiegati.stream().sorted((o1, o2) -> Double.compare(o1.getStipendio(), o2.getStipendio()))
+//				.reduce(new Identity(listImpiegati.size()), (id, emp) -> id.combina(emp), (id1, id2) -> id1.combina(id2) );
+		Identity result = listImpiegati.stream().parallel()
+		.reduce(new Identity(listImpiegati.size()), (id, emp) -> Identity.combina(id, emp), (id1, id2) -> Identity.combina(id1, id2) );
 		return result;
 	     
 	}

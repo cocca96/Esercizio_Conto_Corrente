@@ -149,8 +149,7 @@ public class Menu {
 				break;
 			case 5: b.listGiovaniImpiegati().forEach(System.out::println);
 				break;
-			case 6: Identity res =  b.statistiche();
-					System.out.println(res.getSum()) ;
+			case 6: b.statistiche().stampa();
 			break;
 			default:
 				System.out.println("Grazie e serena giornata");

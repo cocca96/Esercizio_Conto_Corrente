@@ -52,6 +52,8 @@ public class Impiegato {
 	  public String toString() {
 		  return "NOME: "+ nome+" "+ " COGNOME: "+ cognome + " SESSO: "+sesso+" DATA NASCITA: "+dataNascita+" STIPENDIO: "+stipendio;
 	  }
+
+
 }
 
 
